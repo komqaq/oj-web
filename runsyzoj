@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /var/syzoj-web
+npm start > log.txt 2>&1

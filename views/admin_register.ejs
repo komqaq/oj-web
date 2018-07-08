@@ -1,0 +1,64 @@
+<% this.adminPage = 'register'; %>
+<% include admin_header %>
+<form method="post" class="ui form">
+<h3>注册单个新用户</h3>
+<hr />
+<div class="four fields">
+	<div class="field">
+		<label>用户名</label>
+		<input type="text" name="username" placeholder="用户名">
+	</div>
+
+	<div class="field">
+		<label>密码</label>
+		<input type="text" name="password" placeholder="密码">
+	</div>
+
+	<div class="field">
+		<label>邮箱</label>
+		<input type="text" name="email" placeholder="邮箱">
+	</div>
+	<div class="field">
+		<label>&nbsp;</label>
+		<button class="ui blue button">提交</button>
+	</div>
+</div>
+<h3>批量注册新用户</h3>
+<hr />
+<div class="four fields">
+	<div class="field">
+		<label>账号前缀</label>
+		<input type="text" name="prefix" placeholder="账号前缀">
+	</div>
+
+	<div class="field">
+		<label>起始数字</label>
+		<input type="text" name="startnum" placeholder="起始数字">
+	</div>
+
+	<div class="field">
+		<label>终止数字</label>
+		<input type="text" name="endnum" placeholder="终止数字">
+	</div>
+
+	<div class="field">
+		<label>&nbsp;</label>
+		<button class="ui blue button">提交</button>
+	</div>
+</div>
+<h3>生成注册码</h3>
+<hr />
+<div class="two fields">
+	<div class="field">
+		<label>生成个数</label>
+		<input type="text" name="count" placeholder="生成个数">
+	</div>
+
+	<div class="field">
+		<label>&nbsp;</label>
+		<button class="ui blue button">提交</button>
+	</div>
+</div>
+</form>
+
+<% include admin_footer %>

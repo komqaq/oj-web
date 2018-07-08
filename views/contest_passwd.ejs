@@ -1,0 +1,11 @@
+<% this.title = '输入密码' %>
+<% include header %>
+<div class="padding">
+        <form class="ui form" action="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>" method="post">
+            <div class="field">
+                <label>密码(仅限英文和数字)</label>
+                <input type="text" name="password">
+            </div>
+            <button type="submit" class="ui button">提交</button>
+        </form>
+<% include footer %>
