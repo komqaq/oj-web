@@ -474,6 +474,9 @@ app.post('/problem/:id/import', async (req, res) => {
     problem.file_io = json.obj.file_io;
     problem.file_io_input_name = json.obj.file_io_input_name;
     problem.file_io_output_name = json.obj.file_io_output_name;
+
+    //problem.is_public = true;
+
     if (json.obj.type) problem.type = json.obj.type;
 
     let validateMsg = await problem.validate();
@@ -948,7 +951,7 @@ app.post('/problem/:id/custom-test', app.multer.fields([{ name: 'code_upload', m
       language: req.body.language,
       user_id: res.locals.user.id,
       problem_id: id
-    });
+    }); 
 
     await custom_test.save();
 
