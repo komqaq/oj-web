@@ -31,8 +31,8 @@
   },
   "sorting": {
     "ranklist": {
-      "field": "rating",
-      "order": "desc"
+      "field": "id",
+      "order": "asc"
     },
     "problem": {
       "field": "id",
