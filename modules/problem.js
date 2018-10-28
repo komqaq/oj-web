@@ -33,7 +33,7 @@ let Judger = syzoj.lib('judger');
 
 app.get('/problems', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     const sort = req.query.sort || syzoj.config.sorting.problem.field;
     const order = req.query.order || syzoj.config.sorting.problem.order;
     if (!['id', 'title', 'rating', 'ac_num', 'submit_num', 'ac_rate'].includes(sort) || !['asc', 'desc'].includes(order)) {
@@ -86,7 +86,7 @@ app.get('/problems', async (req, res) => {
 
 app.get('/problems/search', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.query.keyword) || 0;
     const sort = req.query.sort || syzoj.config.sorting.problem.field;
     const order = req.query.order || syzoj.config.sorting.problem.order;
@@ -157,7 +157,7 @@ app.get('/problems/search', async (req, res) => {
 
 app.get('/problems/tag/:tagIDs', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let tagIDs = Array.from(new Set(req.params.tagIDs.split(',').map(x => parseInt(x))));
     let tags = await tagIDs.mapAsync(async tagID => ProblemTag.fromID(tagID));
     const sort = req.query.sort || syzoj.config.sorting.problem.field;
@@ -223,7 +223,7 @@ app.get('/problems/tag/:tagIDs', async (req, res) => {
 
 app.get('/problem/:id', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
     if (!problem) throw new ErrorMessage('无此题目。');
@@ -267,7 +267,7 @@ app.get('/problem/:id', async (req, res) => {
 
 app.get('/problem/:id/export', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
     if (!problem || !problem.is_public) throw new ErrorMessage('无此题目。');
@@ -301,7 +301,7 @@ app.get('/problem/:id/export', async (req, res) => {
 
 app.get('/problem/:id/edit', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
 
@@ -333,7 +333,7 @@ app.get('/problem/:id/edit', async (req, res) => {
 
 app.post('/problem/:id/edit', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
     if (!problem) {
@@ -396,7 +396,7 @@ app.post('/problem/:id/edit', async (req, res) => {
 
 app.get('/problem/:id/import', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
 
@@ -428,7 +428,7 @@ app.get('/problem/:id/import', async (req, res) => {
 
 app.post('/problem/:id/import', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
     if (!problem) {
@@ -512,7 +512,7 @@ app.post('/problem/:id/import', async (req, res) => {
 // The 'manage' is not `allow manage`'s 'manage', I just have no better name for it.
 app.get('/problem/:id/manage', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -537,7 +537,7 @@ app.get('/problem/:id/manage', async (req, res) => {
 
 app.post('/problem/:id/manage', app.multer.fields([{ name: 'testdata', maxCount: 1 }, { name: 'additional_file', maxCount: 1 }]), async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -618,7 +618,7 @@ app.post('/problem/:id/dis_public', async (req, res) => {
 
 app.post('/problem/:id/submit', app.multer.fields([{ name: 'answer', maxCount: 1 }]), async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
     const curUser = res.locals.user;
@@ -721,7 +721,7 @@ app.post('/problem/:id/submit', app.multer.fields([{ name: 'answer', maxCount: 1
 
 app.post('/problem/:id/delete', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
     if (!problem) throw new ErrorMessage('无此题目。');
@@ -741,7 +741,7 @@ app.post('/problem/:id/delete', async (req, res) => {
 
 app.get('/problem/:id/testdata', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -771,7 +771,7 @@ app.get('/problem/:id/testdata', async (req, res) => {
 
 app.post('/problem/:id/testdata/upload', app.multer.array('file'), async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -795,7 +795,7 @@ app.post('/problem/:id/testdata/upload', app.multer.array('file'), async (req, r
 
 app.post('/problem/:id/testdata/delete/:filename', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -815,7 +815,7 @@ app.post('/problem/:id/testdata/delete/:filename', async (req, res) => {
 
 app.get('/problem/:id/testdata/download/:filename?', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     if (req.params.id == 'lydsy') {
 	  // modified
       let problem = await Problem.fromID(1000);
@@ -854,7 +854,7 @@ app.get('/problem/:id/testdata/download/:filename?', async (req, res) => {
 
 app.get('/problem/:id/download/additional_file', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 
@@ -888,7 +888,7 @@ app.get('/problem/:id/download/additional_file', async (req, res) => {
 
 app.get('/problem/:id/statistics/:type', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let problem = await Problem.fromID(id);
 

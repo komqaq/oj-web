@@ -35,7 +35,7 @@ const { getSubmissionInfo, getRoughResult, processOverallResult } = require('../
 
 app.get('/contests', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let where;
     if (res.locals.user && res.locals.user.is_admin) where = {}
     else where = { is_public: true };
@@ -155,7 +155,7 @@ app.post('/contest/:id/edit', async (req, res) => {
 
 app.get('/contest/:id', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     const curUser = res.locals.user;
     let contest_id = parseInt(req.params.id);
 
@@ -300,7 +300,7 @@ app.post('/contest/:id', async (req, res) => {
 
 app.get('/contest/:id/ranklist1', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.fromID(contest_id);
     const curUser = res.locals.user;
@@ -373,7 +373,7 @@ app.get('/contest/:id/ranklist1', async (req, res) => {
 
 app.get('/contest/:id/ranklist2', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.fromID(contest_id);
     const curUser = res.locals.user;
@@ -461,7 +461,7 @@ function getDisplayConfig(contest) {
 
 app.get('/contest/:id/submissions', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.fromID(contest_id);
     if (!contest.is_public && (!res.locals.user || !res.locals.user.is_admin)) throw new ErrorMessage('比赛未公开，请耐心等待 (´∀ `)');
@@ -569,7 +569,7 @@ app.get('/contest/:id/submissions', async (req, res) => {
 
 app.get('/contest/submission/:id', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     const id = parseInt(req.params.id);
     const judge = await JudgeState.fromID(id);
     if (!judge) throw new ErrorMessage("提交记录 ID 不正确。");
@@ -619,7 +619,7 @@ app.get('/contest/submission/:id', async (req, res) => {
 
 app.get('/contest/:id/problem/:pid', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.fromID(contest_id);
     if (!contest) throw new ErrorMessage('无此比赛。');
@@ -678,7 +678,7 @@ app.get('/contest/:id/problem/:pid', async (req, res) => {
 
 app.get('/contest/:id/:pid/download/additional_file', async (req, res) => {
   try {
-    if(!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)');
+    if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let contest = await Contest.fromID(id);
     if (!contest) throw new ErrorMessage('无此比赛。');
