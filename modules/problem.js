@@ -27,6 +27,7 @@ let Contest = syzoj.model('contest');
 let ProblemTag = syzoj.model('problem_tag');
 let ProblemTagMap = syzoj.model('problem_tag_map');
 let Article = syzoj.model('article');
+let User = syzoj.model('user');
 const Sequelize = require('sequelize');
 
 let Judger = syzoj.lib('judger');
@@ -304,6 +305,7 @@ app.get('/problem/:id/edit', async (req, res) => {
     if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
+    if (! await res.locals.user.hasPrivilege('manage_problem')) throw new ErrorMessage('您没有权限进行此操作。');
 
     if (!problem) {
       if (!res.locals.user) throw new ErrorMessage('请登录后继续。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
@@ -336,6 +338,8 @@ app.post('/problem/:id/edit', async (req, res) => {
     if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
+    if (! await res.locals.user.hasPrivilege('manage_problem')) throw new ErrorMessage('您没有权限进行此操作。');
+
     if (!problem) {
       if (!res.locals.user) throw new ErrorMessage('请登录后继续。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
 
@@ -399,6 +403,7 @@ app.get('/problem/:id/import', async (req, res) => {
     if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
+    if (! await res.locals.user.hasPrivilege('manage_problem')) throw new ErrorMessage('您没有权限进行此操作。');
 
     if (!problem) {
       if (!res.locals.user) throw new ErrorMessage('请登录后继续。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
@@ -431,6 +436,8 @@ app.post('/problem/:id/import', async (req, res) => {
     if (!res.locals.user) throw new ErrorMessage('请先登陆哦(´∀ `)', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id) || 0;
     let problem = await Problem.fromID(id);
+    if (! await res.locals.user.hasPrivilege('manage_problem')) throw new ErrorMessage('您没有权限进行此操作。');
+    
     if (!problem) {
       if (!res.locals.user) throw new ErrorMessage('请登录后继续。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
 
