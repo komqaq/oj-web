@@ -38,7 +38,8 @@ app.post('/api/login', async (req, res) => {
     if (!user) throw 1001;
     else if (user.password == null || user.password === '') res.send({ error_code: 1003 });
     else if (user.password !== req.body.password) res.send({ error_code: 1002 });
-    //else if (req.body.verification != "zyyzkal") res.send({ error_code: 1004 });
+    else if (!syzoj.utils.isValidUsername(req.body.verification)) res.send({error_code: 1004 });
+    else if (req.body.verification !== syzoj.config.verf_code) res.send({ error_code: 1004 });
     else {
       req.session.user_id = user.id;
       setLoginCookie(user.username, user.password, res);

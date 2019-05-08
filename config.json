@@ -167,5 +167,6 @@
   "session_secret": "asdivj8w9aefy2194ty219",
   "judge_server_addr": "http://127.0.0.1:5284",
   "judge_token": "demojudgetoken",
-  "email_jwt_secret": "34tvjcje9dls832as94fk"
+  "email_jwt_secret": "34tvjcje9dls832as94fk",
+  "verf_code": "bwcxljsm"
 }

@@ -838,7 +838,7 @@ app.get('/problem/:id/testdata/download/:filename?', async (req, res) => {
 
       if (!problem) throw new ErrorMessage('无此题目。');
     // modified
-      if (!await problem.isAllowedEditBy(res.locals.user) && (filename.indexOf(".jpg")==-1) && (filename.indexOf(".jpeg")==-1) && (filename.indexOf(".png")==-1)) throw new ErrorMessage('您没有权限进行此操作。');
+      if (!await problem.isAllowedEditBy(res.locals.user) && (req.params.filename.indexOf(".jpg")==-1) && (req.params.filename.indexOf(".jpeg")==-1) && (req.params.filename.indexOf(".png")==-1)) throw new ErrorMessage('您没有权限进行此操作。');
 	    if (!req.params.filename) {
         if (!await syzoj.utils.isFile(problem.getTestdataArchivePath())) {
           await problem.makeTestdataZip();
