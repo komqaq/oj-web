@@ -27,6 +27,7 @@ let model = db.define('user', {
   username: { type: Sequelize.STRING(80), unique: true },
   email: { type: Sequelize.STRING(120) },
   password: { type: Sequelize.STRING(120) },
+  team: { type: Sequelize.INTEGER },
 
   nickname: { type: Sequelize.STRING(80) },
   nameplate: { type: Sequelize.TEXT },
@@ -67,6 +68,7 @@ class User extends Model {
       username: '',
       password: '',
       email: '',
+      team: 1,
 
       nickname: '',
       is_admin: false,

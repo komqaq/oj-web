@@ -59,7 +59,8 @@ app.get('/admin/info', async (req, res) => {
 });
 
 let configItems = {
-  'title': { name: '站点标题', type: String },
+  'title': { name: '站点标题', type: String },      
+  'verf_code': { name: '验证码', type: String },
   '邮箱验证': null,
   'register_mail.enabled': { name: '启用', type: Boolean },
   'register_mail.address': { name: '发件人地址', type: String },
