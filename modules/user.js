@@ -24,6 +24,7 @@ const RatingCalculation = syzoj.model('rating_calculation');
 const RatingHistory = syzoj.model('rating_history');
 const Contest = syzoj.model('contest');
 const ContestPlayer = syzoj.model('contest_player');
+const Team = syzoj.model('team');
 
 // Ranklist
 app.get('/ranklist', async (req, res) => {
@@ -107,6 +108,7 @@ app.get('/user/:id', async (req, res) => {
     user.articles = await user.getArticles();
     user.allowedEdit = await user.isAllowedEditBy(res.locals.user);
 
+    let team = await Team.fromID(user.team);
     let statistics = await user.getStatistics();
     await user.renderInformation();
     user.emailVisible = user.public_email || user.allowedEdit;
@@ -134,7 +136,8 @@ app.get('/user/:id', async (req, res) => {
     res.render('user', {
       show_user: user,
       statistics: statistics,
-      ratingHistories: ratingHistories
+      ratingHistories: ratingHistories,
+      user_team: team
     });
   } catch (e) {
     syzoj.log(e);

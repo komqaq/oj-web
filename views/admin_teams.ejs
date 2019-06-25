@@ -1,0 +1,38 @@
+<%
+this.adminPage = 'teams';
+%>
+<% include admin_header %>
+<table class="ui center aligned celled table">
+<thead>
+  <tr>
+    <th>序号</th>
+    <th>名称</th>
+  </tr>
+</thead>
+
+<tbody>
+  <% for (let i = 0; i < teams.length; i++) { %>
+    <tr>
+      <td><%= teams[i].id %></td>
+      <td><%= teams[i].name %></td>
+    </tr>
+  <% } %>
+</tbody>
+</table>
+
+<form method="post" class="ui form">
+<h3>添加团队（先不要动qaq</h3>
+<hr />
+<div class="two fields">
+	<div class="field">
+		<label>团队名称</label>
+		<input type="text" name="name" placeholder="name">
+	</div>
+
+	<div class="field">
+		<label>&nbsp;</label>
+		<button class="ui blue button">提交</button>
+	</div>
+</div>
+</form>
+<% include admin_footer %>

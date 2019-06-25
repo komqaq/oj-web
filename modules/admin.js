@@ -22,6 +22,7 @@ let JudgeState = syzoj.model('judge_state');
 let Article = syzoj.model('article');
 let Contest = syzoj.model('contest');
 let User = syzoj.model('user');
+let Team = syzoj.model('team');
 let UserPrivilege = syzoj.model('user_privilege');
 const RatingCalculation = syzoj.model('rating_calculation');
 const RatingHistory = syzoj.model('rating_history');
@@ -444,6 +445,53 @@ app.post('/admin/links', async (req, res) => {
     await syzoj.utils.saveConfig();
 
     res.redirect(syzoj.utils.makeUrl(['admin', 'links']));
+  } catch (e) {
+    syzoj.log(e);
+    res.render('error', {
+      err: e
+    })
+  }
+});
+
+app.get('/admin/teams', async (req, res) => {
+  try {
+    if (!res.locals.user || !res.locals.user.is_admin) throw new ErrorMessage('您没有权限进行此操作。');
+
+    let where = {};
+    let teams = await Team.query(null, where, [['id', 'asc']]);
+
+    res.render('admin_teams', {
+      teams: teams
+    });
+  } catch (e) {
+    syzoj.log(e);
+    res.render('error', {
+      err: e
+    })
+  }
+});
+
+async function registeTeam(teamname) {
+  	team = await Team.create({
+	    name: teamname
+  	});
+  await team.save();
+}
+
+app.post('/admin/teams', async (req, res) => {
+  try {
+    if (!res.locals.user || !res.locals.user.is_admin) throw new ErrorMessage('您没有权限进行此操作。');
+
+    if(req.body.name != "") {
+      try {
+        registeTeam(req.body.name)
+
+      } catch(e) {
+        throw new ErrorMessage("注册信息有误，请重试。")
+      }
+    }
+
+    res.redirect(syzoj.utils.makeUrl(['admin', 'teams']));
   } catch (e) {
     syzoj.log(e);
     res.render('error', {
