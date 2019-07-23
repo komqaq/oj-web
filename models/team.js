@@ -26,9 +26,9 @@ let User = syzoj.model('user');
 
 let model = db.define('team', {
   id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: Sequelize.STRING(80), unique: true }//,
-  //contest_id: { type: Sequelize.INTEGER },
-  //user_id: { type: Sequelize.INTEGER }
+  name: { type: Sequelize.STRING(80), unique: true },
+  users: { type: Sequelize.TEXT },
+  admins: { type: Sequelize.TEXT }
 }, {
     timestamps: false,
     tableName: 'team',
@@ -44,7 +44,9 @@ let Model = require('./common');
 class Team extends Model {
   static async create(val) {
     return Team.fromRecord(Team.model.build(Object.assign({
-      name:''
+      name:'',
+      users:'',
+      admins:''
     }, val)));
   }
   

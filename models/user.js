@@ -27,7 +27,9 @@ let model = db.define('user', {
   username: { type: Sequelize.STRING(80), unique: true },
   email: { type: Sequelize.STRING(120) },
   password: { type: Sequelize.STRING(120) },
+
   team: { type: Sequelize.INTEGER },
+  team_admin: { type: Sequelize.BOOLEAN },
 
   nickname: { type: Sequelize.STRING(80) },
   nameplate: { type: Sequelize.TEXT },
@@ -69,6 +71,7 @@ class User extends Model {
       password: '',
       email: '',
       team: 1,
+      team_admin: false,
 
       nickname: '',
       is_admin: false,
@@ -101,6 +104,12 @@ class User extends Model {
     if (!user) return false;
     if (await user.hasPrivilege('manage_user')) return true;
     return user && (user.is_admin || this.id === user.id);
+  }
+
+  async isAllowedEditByTeam(user) {
+    if (!user) return false;
+    //if (await user.hasPrivilege('manage_user')) return true;
+    return user && (user.is_admin || user.team_admin);
   }
 
   async refreshSubmitInfo() {

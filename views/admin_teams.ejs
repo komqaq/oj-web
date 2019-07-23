@@ -11,17 +11,21 @@ this.adminPage = 'teams';
 </thead>
 
 <tbody>
-  <% for (let i = 0; i < teams.length; i++) { %>
+  <tr>
+    <td><%= teams[0].id %></td>
+    <td><%= teams[0].name %></td>
+  </tr>
+  <% for (let i = 1; i < teams.length; i++) { %>
     <tr>
       <td><%= teams[i].id %></td>
-      <td><%= teams[i].name %></td>
+      <td><a href="<%= syzoj.utils.makeUrl(['team', teams[i].id]) %>"><%= teams[i].name %></a></td>
     </tr>
   <% } %>
 </tbody>
 </table>
 
 <form method="post" class="ui form">
-<h3>添加团队（先不要动qaq</h3>
+<h3>添加团队</h3>
 <hr />
 <div class="two fields">
 	<div class="field">

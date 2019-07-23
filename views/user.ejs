@@ -98,7 +98,7 @@
                                     <div class="row">
                                         <div class="column">
                                             <h4 class="ui top attached block header">我的团队</h4>
-                                            <div class="ui bottom attached segment"><%= user_team.name %></div>
+                                            <div class="ui bottom attached segment"><a href="<%= syzoj.utils.makeUrl(['team', user_team.id]) %>"><%= user_team.name %></a></div>
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,63 @@
+<% this.title = '修改团队信息' %>
+<% include header %>
+<div class="padding">
+        <form class="ui form" action="<%= syzoj.utils.makeUrl(['team', team.id, 'edit']) %>" method="post">
+            <div class="field">
+                <label>团队名称</label>
+                <input type="text" name="name" value="<%= team.name %>">
+            </div>
+            <div class="field">
+                <label>管理员列表</label>
+                <select class="ui fluid search dropdown" multiple="" id="search_admins" name="admins">
+                <% for (let admin of admins) { %>
+                <option value="<%= admin.id %>" selected><%= admin.username %></option>
+                <% } %>
+                </select>
+            </div>
+            <div class="field">
+                <label>成员列表</label>
+                <select class="ui fluid search dropdown" multiple="" id="search_users" name="users">
+                <% for (let user of users) { %>
+                <option value="<%= user.id %>" selected><%= user.username %></option>
+                <% } %>
+                </select>
+            </div>
+            <button type="submit" class="ui button">提交</button>
+        </form>
+<script>
+$(function () {
+  $('#search_admins')
+    .dropdown({
+      debug: true,
+      apiSettings: {
+        url: '/api/v2/search/users/{query}',
+        onResponse: function (response) {
+          var a = $('#search_admins').val().map(function (x) { return parseInt(x) });
+          if (response.results) {
+            response.results = response.results.filter(function(x){ return !a.includes(parseInt(x.value))});
+          }
+          return response;
+        },
+        cache: false
+      }
+    });
+});
+$(function () {
+  $('#search_users')
+    .dropdown({
+      debug: true,
+      apiSettings: {
+        url: '/api/v2/search/users/{query}',
+        onResponse: function (response) {
+          var a = $('#search_users').val().map(function (x) { return parseInt(x) });
+          if (response.results) {
+            response.results = response.results.filter(function(x){ return !a.includes(parseInt(x.value))});
+          }
+          return response;
+        },
+        cache: false
+      }
+    });
+});
+</script>
+<% include footer %>

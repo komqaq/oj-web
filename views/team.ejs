@@ -1,0 +1,40 @@
+<% this.title = team.name + ' - 团队'; %>
+<% include header %>
+<style>
+#avatar_container:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+</style>
+<div class="padding">
+    <h2><%= team.name %></h2>
+    <div class="ui grid">
+        <div class="row">
+            <div class="column">
+                <a href="<%= syzoj.utils.makeUrl(['team', team.id, 'edit']) %>" class="ui mini right floated button">编辑团队</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h4 class="ui top attached block header">管理员</h4>
+                <div class="ui bottom attached segment">
+                    <% for (let user of admins) { %>
+                        <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h4 class="ui top attached block header">成员</h4>
+                <div class="ui bottom attached segment">
+                    <% for (let user of users) { %>
+                        <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include footer %>
